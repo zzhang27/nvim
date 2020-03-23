@@ -105,7 +105,6 @@ Plug 'ajmwagar/vim-deus'
 " 高亮
 Plug 'jaxbot/semantic-highlight.vim'
 Plug 'RRethy/vim-illuminate'
-Plug 'numirias/semshi', { 'do': ':UpdateRemotePlugins', 'for' :['python', 'vim-plug'] }
 
 Plug 'elzr/vim-json'
 
