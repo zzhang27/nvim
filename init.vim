@@ -168,7 +168,7 @@ let g:Illuminate_delay = 750
 hi illuminatedWord cterm=undercurl gui=undercurl
 
 " COC
-let g:coc_global_extensions = ['coc-python', 'coc-vimlsp', 'coc-json', 'coc-gitignore', 'coc-git']
+let g:coc_global_extensions = ['coc-sh', 'coc-python', 'coc-vimlsp', 'coc-json', 'coc-gitignore', 'coc-git']
 
 " GitGutter
 let g:gitgutter_signs = 0
