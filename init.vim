@@ -190,6 +190,9 @@ Plug 'junegunn/vim-easy-align'
 Plug 'Vimjas/vim-python-pep8-indent', { 'for' :['python', 'vim-plug'] }
 Plug 'tell-k/vim-autopep8'
 
+" Go
+Plug 'fatih/vim-go' , { 'for': ['go', 'vim-plug'], 'tag': '*' }
+
 call plug#end()
 
 " 主题设置
@@ -198,8 +201,8 @@ set termguicolors
 let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 
 " color gruvbox
-color skeletor
-" color deus
+" color skeletor
+color deus
 " color space-vim-theme
 
 
