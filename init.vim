@@ -6,6 +6,7 @@ set autochdir
 set autoread
 " 行号
 set number
+set relativenumber
 " 插入模式下按下Tab键时，输入到Vim中的都是空格
 set noexpandtab
 " 选项设置按下Tab键时，缩进的空格个数
@@ -41,8 +42,9 @@ set completeopt=longest,noinsert,menuone,noselect,preview
 set ttyfast "should make scrolling faster
 set lazyredraw "same as above
 set visualbell
-set updatetime=1000
+set updatetime=100
 set virtualedit=block
+set shortmess+=c
 
 filetype plugin on
 
@@ -137,6 +139,7 @@ endfunc
 " 为不同的文件类型设置缩进
 autocmd Filetype python setlocal tabstop=4
 autocmd Filetype sh setlocal tabstop=2
+autocmd Filetype go setlocal tabstop=2 smartindent
 autocmd Filetype cpp setlocal tabstop=2 smartindent
 
 " 插件
@@ -152,14 +155,9 @@ Plug 'liuchengxu/eleline.vim'
 Plug 'tpope/vim-commentary'
 
 " 主题
-Plug 'liuchengxu/space-vim-theme'
-Plug 'skreek/skeletor.vim'
+Plug 'bpietravalle/vim-bolt'
+Plug 'bling/vim-bufferline'
 Plug 'ajmwagar/vim-deus'
-Plug 'morhetz/gruvbox'
-Plug 'davidklsn/vim-sialoquent'
-Plug 'junegunn/seoul256.vim'
-Plug 'rakr/vim-two-firewatch'
-Plug 'jacoborus/tender.vim'
 
 " 移动
 Plug 'easymotion/vim-easymotion'
@@ -172,7 +170,7 @@ Plug 'elzr/vim-json'
 
 " 括号
 Plug 'luochen1990/rainbow'
-" Plug 'jiangmiao/auto-pairs'
+Plug 'jiangmiao/auto-pairs'
 
 " Code Complete
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
@@ -191,7 +189,7 @@ Plug 'Vimjas/vim-python-pep8-indent', { 'for' :['python', 'vim-plug'] }
 Plug 'tell-k/vim-autopep8'
 
 " Go
-Plug 'fatih/vim-go' , { 'for': ['go', 'vim-plug'], 'tag': '*' }
+" Plug 'fatih/vim-go' , { 'for': ['go', 'vim-plug'], 'tag': '*' }
 
 call plug#end()
 
@@ -200,12 +198,7 @@ call plug#end()
 set termguicolors
 let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 
-" color gruvbox
-" color skeletor
 color deus
-" color space-vim-theme
-
-
 
 " NerdTree 设置
 " autocmd vimenter * NERDTree
@@ -235,7 +228,26 @@ let g:Illuminate_delay = 750
 hi illuminatedWord cterm=undercurl gui=undercurl
 
 " COC
-let g:coc_global_extensions = ['coc-sh', 'coc-python', 'coc-vimlsp', 'coc-json', 'coc-gitignore', 'coc-git']
+let g:coc_global_extensions = ['coc-sh', 'coc-python', 'coc-vimlsp', 'coc-json', 'coc-gitignore', 'coc-git', 'coc-go']
+
+" Tab 选择
+inoremap <silent><expr> <TAB>
+	\ pumvisible() ? "\<C-n>" :
+	\ <SID>check_back_space() ? "\<TAB>" :
+	\ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
+function! s:check_back_space() abort
+	let col = col('.') - 1
+	return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+" 重命名
+nmap <cr>q <Plug>(coc-rename)
+
+" Add Golang Missing Import On Save
+autocmd BufWritePre *.go :call CocAction('organizeImport')
+autocmd Filetype go :gopls
 
 " GitGutter
 let g:gitgutter_signs = 0
