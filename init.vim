@@ -44,8 +44,11 @@ set lazyredraw "same as above
 set visualbell
 set updatetime=100
 set virtualedit=block
-set shortmess+=c
 
+set nobackup
+set noswapfile
+set noundofile
+set nowritebackup
 filetype plugin on
 
 " 状态栏
@@ -98,6 +101,10 @@ endfunc
 " 行首, 行尾
 inoremap <C-a> <Home>
 inoremap <C-e> <End>
+inoremap <C-f> <Right>
+inoremap <C-b> <Left>
+inoremap <C-p> <Up>
+inoremap <C-n> <Down>
 nnoremap H ^
 nnoremap L $
 " 取消撤销
@@ -179,6 +186,7 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
 
+Plug 'mg979/vim-xtabline'
 
 Plug 'gcmt/wildfire.vim'
 " 符号对齐:
@@ -247,7 +255,6 @@ nmap <cr>q <Plug>(coc-rename)
 
 " Add Golang Missing Import On Save
 autocmd BufWritePre *.go :call CocAction('organizeImport')
-autocmd Filetype go :gopls
 
 " GitGutter
 let g:gitgutter_signs = 0
@@ -264,4 +271,11 @@ autocmd FileType python noremap <buffer> <C-l> :call Autopep8()<CR>
 " 取消对比窗口
 let g:autopep8_disable_show_diff=1
 
-nnoremap ss <Plug>(easymotion-s2)
+" ===
+" === xtabline
+" ===
+let g:xtabline_settings = {}
+let g:xtabline_settings.enable_mappings = 0
+let g:xtabline_settings.tabline_modes = ['tabs', 'buffers']
+let g:xtabline_settings.enable_persistance = 0
+let g:xtabline_settings.last_open_first = 1
