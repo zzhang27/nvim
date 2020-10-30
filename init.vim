@@ -36,7 +36,6 @@ set showmode
 " 如果搜索模式中不包含任何大写字母，Vim 则会认为搜索应该不区分大小写
 set ignorecase
 set smartcase
-set shortmess+=c
 set inccommand=split
 set completeopt=longest,noinsert,menuone,noselect,preview
 set ttyfast "should make scrolling faster
@@ -48,13 +47,10 @@ set virtualedit=block
 set nobackup
 set noswapfile
 set noundofile
-set nowritebackup
 filetype plugin on
 
 " 状态栏
 set laststatus=2
-" 取消临时文件
-set noswapfile
 
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 
@@ -162,8 +158,6 @@ Plug 'liuchengxu/eleline.vim'
 Plug 'tpope/vim-commentary'
 
 " 主题
-Plug 'bpietravalle/vim-bolt'
-Plug 'bling/vim-bufferline'
 Plug 'ajmwagar/vim-deus'
 
 " 移动
@@ -186,8 +180,6 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
 
-Plug 'mg979/vim-xtabline'
-
 Plug 'gcmt/wildfire.vim'
 " 符号对齐:
 Plug 'junegunn/vim-easy-align'
@@ -195,9 +187,6 @@ Plug 'junegunn/vim-easy-align'
 " Python
 Plug 'Vimjas/vim-python-pep8-indent', { 'for' :['python', 'vim-plug'] }
 Plug 'tell-k/vim-autopep8'
-
-" Go
-" Plug 'fatih/vim-go' , { 'for': ['go', 'vim-plug'], 'tag': '*' }
 
 call plug#end()
 
@@ -238,18 +227,6 @@ hi illuminatedWord cterm=undercurl gui=undercurl
 " COC
 let g:coc_global_extensions = ['coc-sh', 'coc-python', 'coc-vimlsp', 'coc-json', 'coc-gitignore', 'coc-git', 'coc-go']
 
-" Tab 选择
-inoremap <silent><expr> <TAB>
-	\ pumvisible() ? "\<C-n>" :
-	\ <SID>check_back_space() ? "\<TAB>" :
-	\ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
-function! s:check_back_space() abort
-	let col = col('.') - 1
-	return !col || getline('.')[col - 1]  =~# '\s'
-endfunction
-
 " 重命名
 nmap <cr>q <Plug>(coc-rename)
 
@@ -271,11 +248,3 @@ autocmd FileType python noremap <buffer> <C-l> :call Autopep8()<CR>
 " 取消对比窗口
 let g:autopep8_disable_show_diff=1
 
-" ===
-" === xtabline
-" ===
-let g:xtabline_settings = {}
-let g:xtabline_settings.enable_mappings = 0
-let g:xtabline_settings.tabline_modes = ['tabs', 'buffers']
-let g:xtabline_settings.enable_persistance = 0
-let g:xtabline_settings.last_open_first = 1
